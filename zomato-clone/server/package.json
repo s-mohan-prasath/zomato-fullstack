@@ -1,0 +1,26 @@
+{
+  "name": "zomato-clone",
+  "version": "1.0.0",
+  "description": "This is a full stack zomato clone",
+  "main": "index.js",
+  "scripts": {
+    "test": "dev",
+    "build":"babel index.js -d dist",
+    "start":"npm run build && node dist/index.js",
+    "dev":"nodemon --exec babel-node index.js"
+  },
+  "author": "Mohan Prasath S",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.3",
+    "@babel/node": "^7.19.1",
+    "@babel/preset-env": "^7.19.3",
+    "nodemon": "^2.0.20"
+  }
+}
