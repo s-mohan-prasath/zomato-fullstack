@@ -1,0 +1,5 @@
+In package.json this code is missing & add it in future => && node dist/index.js
+
+Recent Errors:
+1) Error: Unknown authentication strategy "JWT" from index.config.js
+2) Make the restaurant create route as Private as it is Public and other than admin will create new restaurant using that route
