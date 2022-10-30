@@ -4,6 +4,14 @@ import { UserModel } from "../../database/allModels";
 
 const Router = express.Router();
 
+/**
+ * Route    /signup
+ * Des       create new authorised user
+ * Params    none
+ * Access    Public
+ * Method    POST
+ */
+
 Router.post("/signup", async (req, res) => {
   try {
     const {email, password, fullName} = req.body.credentials
@@ -17,6 +25,14 @@ Router.post("/signup", async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 });
+
+/**
+ * Route    /signin
+ * Des       Login to existing Account
+ * Params    none
+ * Access    Public
+ * Method    POST
+ */
 
 Router.post("/signin", async (req, res) => {
   try{

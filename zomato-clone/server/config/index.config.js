@@ -17,13 +17,15 @@ const options = {
 };
 
 export default (passport) => {
-  new JWtStrategy(options, async (jwt__payloads, done) => {
-    try {
-      const doesUserExist = await UserModel.findById(jwt__payloads.user);
-      if (!doesUserExist) return done(null, false);
-      return done(null, doesUserExist);
-    } catch (error) {
-      throw new Error(error);
-    }
-  });
+  passport.use(
+    new JWtStrategy(options, async (jwt__payloads, done) => {
+      try {
+        const doesUserExist = await UserModel.findById(jwt__payloads.user);
+        if (!doesUserExist) return done(null, false);
+        return done(null, doesUserExist);
+      } catch (error) {
+        throw new Error(error);
+      }
+    })
+  )
 };
