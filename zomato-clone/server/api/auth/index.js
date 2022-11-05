@@ -1,6 +1,7 @@
 import express from "express";
 
 import { UserModel } from "../../database/allModels";
+import { ValidateSignIn, ValidateSignUp } from "../../validate/auth.validate";
 
 const Router = express.Router();
 
@@ -14,7 +15,8 @@ const Router = express.Router();
 
 Router.post("/signup", async (req, res) => {
   try {
-    const {email, password, fullName} = req.body.credentials
+    const {email, password, fullName} = req.body.credentials;
+    await ValidateSignUp(req.body.credentials)
     // await UserModel.findByEmailAndPhone(email, password, fullName);
     const user = await UserModel.findOne({email})
     if (user) throw new Error("User Already Exists");
@@ -36,6 +38,7 @@ Router.post("/signup", async (req, res) => {
 
 Router.post("/signin", async (req, res) => {
   try{
+    await ValidateSignIn(req.body.credentials);
     const user = await UserModel.findByEmailAndPassword(req.body.credentials);
     const token = await user.generateJwtToken();
     res.status(200).json({token, status:"success"})

@@ -1,5 +1,6 @@
-import express from 'express'
-import { RestaurantModel } from '../../database/allModels'
+import express from "express";
+import { RestaurantModel } from "../../database/allModels";
+import { ValidateRestaurantCity, ValidateRestaurantSearch } from "../../validate/restaurant.validate";
 
 const Router = express.Router();
 
@@ -11,16 +12,17 @@ const Router = express.Router();
  * Method   GET
  */
 
- Router.get("/:_id",async (req,res)=>{
-    try{
-        const {_id} = req.params
-        const restaurant = await RestaurantModel.findById(_id)
-        if (!restaurant) return res.status(404).json({error:"No restaurant found"})
-        return res.status(200).json({restaurant})
-    }catch(error){
-        return res.status(500).json({error:error})
-    }
-})
+Router.get("/:_id", async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const restaurant = await RestaurantModel.findById(_id);
+    if (!restaurant)
+      return res.status(404).json({ error: "No restaurant found" });
+    return res.status(200).json({ restaurant });
+  } catch (error) {
+    return res.status(500).json({ error: error });
+  }
+});
 
 /**
  * Route    /
@@ -30,19 +32,22 @@ const Router = express.Router();
  * Method   GET
  */
 
-Router.get("/",async (req,res)=>{
-    try{
-        // http://localhost:4000/restaurant/?city=tirupur
-        const {city} = req.query;
-        const restaurants = RestaurantModel.find({city});
-        if (restaurants.length === 0){
-            return res.json ({error:`No restaurant found in ${city}`})
-        }
-        return res.json({restaurants})
-    }catch(error){
-        return res.status(500).json({error:error})
+Router.get("/", async (req, res) => {
+  try {
+    // http://localhost:4000/restaurant/?city=tirupur
+    const { city } = req.query;
+    await ValidateRestaurantCity(req.query)
+    const restaurants = await RestaurantModel.find({ city });
+    if (restaurants.length === 0) {
+      return res
+        .json({ message: `No restaurant found in ${city}` })
+        .status(400);
     }
-})
+    return res.json({ restaurants }).status(200);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
 
 /**
  * Route    /search/:searchString
@@ -52,18 +57,27 @@ Router.get("/",async (req,res)=>{
  * Method   GET
  */
 
- Router.get("/search/:searchString",async (req,res)=>{
-    try{
-        const {searchString} = req.params;
-        const restaurants = await RestaurantModel.find({name:{$regex:searchString,$options:"i"}})
+Router.get("/search/:searchString", async (req, res) => {
+  try {
+    const searchString= req.params.searchString;
+    await ValidateRestaurantSearch(req.params)
+    const restaurants = await RestaurantModel.find({
+      name: {
+        $regex: searchString,
+        $options: "i",
+      },
+    });
 
-        if (restaurants.length === 0) return res.status(404).json({error:`No restaurant matched with ${searchString}. `})
+    if (restaurants.length === 0)
+      return res
+        .status(404)
+        .json({ error: `No restaurant matched with ${searchString}. ` });
 
-        return res.status(200).json({restaurants})
-    }catch(error){
-        return res.status(500).json({error:error})
-    }
-})
+    return res.status(200).json({ restaurants });
+  } catch (error) {
+    return res.status(500).json({ error: error });
+  }
+});
 
 /**
  * Route /create
@@ -73,18 +87,20 @@ Router.get("/",async (req,res)=>{
  * Method POST
  */
 
-Router.post("/create",async(req,res)=>{
-    try{
-        const address = req.body.credentials.address;
-        const restaurant = await RestaurantModel.findOne({address})
-        if (restaurant) return res.status(500).send({status:"failed", error:"Restaurant Already Exists" })
-        var Created = await RestaurantModel.create(req.body.credentials)
-        res.status(200).json({status:"success",Created})
-    }catch(error){
-        res.status(500).json({error:error.message})
-    }
-
-})
+Router.post("/create", async (req, res) => {
+  try {
+    const address = req.body.credentials.address;
+    const restaurant = await RestaurantModel.findOne({ address });
+    if (restaurant)
+      return res
+        .status(500)
+        .send({ status: "failed", error: "Restaurant Already Exists" });
+    var Created = await RestaurantModel.create(req.body.credentials);
+    res.status(200).json({ status: "success", Created });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 //Example => body section data sending
 /**
  * {
@@ -97,7 +113,4 @@ Router.post("/create",async(req,res)=>{
 }
  */
 
-
-
-
-export default Router
+export default Router;
