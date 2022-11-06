@@ -14,41 +14,53 @@ var _restaurant = _interopRequireDefault(require("./api/restaurant"));
 
 var _user = _interopRequireDefault(require("./api/user"));
 
+var _menu = _interopRequireDefault(require("./api/menu"));
+
+var _order = _interopRequireDefault(require("./api/order"));
+
+var _review = _interopRequireDefault(require("./api/review"));
+
+var _image = _interopRequireDefault(require("./api/image"));
+
 var _passport = _interopRequireDefault(require("passport"));
+
+var _expressSession = _interopRequireDefault(require("express-session"));
 
 var _index = _interopRequireDefault(require("./config/index.config"));
 
+var _google = _interopRequireDefault(require("./config/google.config"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const bodyParser = require('body-parser');
+_dotenv.default.config();
 
-(0, _index.default)(_passport.default); // Variables
+(0, _index.default)(_passport.default);
+(0, _google.default)(_passport.default); // Variables
 
-const zomato = (0, _express.default)();
+const zomato = (0, _express.default)(); // common variables
 
-_dotenv.default.config(); // common variables
-
-
-var PORT = 4000; // Database Connection
+var PORT = 5000; // Adding Additional Passport Configurations
 
 zomato.use(_express.default.json());
+zomato.use((0, _expressSession.default)({
+  secret: "ZomatoApp"
+}));
 zomato.use(_passport.default.initialize());
+zomato.use(_passport.default.session());
 zomato.get('/', (req, res) => {
   res.json({
     message: "server is running"
   });
-}); //  /auth/signup
-// parse application/x-www-form-urlencoded
+}); // parse application/json
 
-zomato.use(bodyParser.urlencoded({
-  extended: false
-})); // parse application/json
-
-zomato.use(bodyParser.json());
 zomato.use("/auth", _auth.default);
 zomato.use("/food", _food.default);
 zomato.use("/restaurant", _restaurant.default);
 zomato.use("/user", _user.default);
+zomato.use("/menu", _menu.default);
+zomato.use("/order", _order.default);
+zomato.use("/review", _review.default);
+zomato.use("/image", _image.default);
 zomato.listen(PORT, () => {
   (0, _connection.default)().then(() => {
     console.log("server is running");

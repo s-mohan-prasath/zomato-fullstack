@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "dev",
-    "build": "babel index.js -d dist",
+    "build": "babel ./src -d dist",
     "start": "npm run build",
-    "dev": "nodemon --exec babel-node index.js"
+    "dev": "nodemon --exec babel-node ./src/index.js"
   },
   "author": "Mohan Prasath S",
   "license": "ISC",
