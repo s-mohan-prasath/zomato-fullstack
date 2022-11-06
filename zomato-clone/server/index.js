@@ -10,6 +10,7 @@ import User from './api/user'
 import Menu from "./api/menu"
 import Order from "./api/order"
 import Review from './api/review'
+import Image from './api/image'
 
 import passport from 'passport'
 import session from 'express-session'
@@ -51,6 +52,7 @@ zomato.use("/user",User);
 zomato.use("/menu",Menu);
 zomato.use("/order",Order)
 zomato.use("/review",Review)
+zomato.use("/image",Image)
 
 zomato.listen(5000,()=>{
     ConnectDB()
