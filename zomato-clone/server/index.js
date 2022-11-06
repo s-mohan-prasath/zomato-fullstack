@@ -16,16 +16,18 @@ import passport from 'passport'
 import session from 'express-session'
 
 import privateRouteConfig from './config/index.config'
+import googleAuthConfig from './config/google.config'
 
 dotenv.config()
 
 privateRouteConfig(passport)
+googleAuthConfig(passport)
 
 // Variables
 const zomato=express();
 
 // common variables
-var PORT = 4000 
+var PORT = 5000 
 
 
 // Adding Additional Passport Configurations
@@ -54,7 +56,7 @@ zomato.use("/order",Order)
 zomato.use("/review",Review)
 zomato.use("/image",Image)
 
-zomato.listen(5000,()=>{
+zomato.listen(PORT,()=>{
     ConnectDB()
     .then(()=>{
         console.log("server is running")
