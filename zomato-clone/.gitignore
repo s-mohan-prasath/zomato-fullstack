@@ -2,3 +2,6 @@ server/node_modules
 server/.env
 Note.txt
 dist/index.js
+
+client/node_modules
+client/package-lock.json
