@@ -1,0 +1,8 @@
+In package.json this code is missing & add it in future => && node dist/index.js
+
+Recent Errors:
+1) Error: Unknown authentication strategy "JWT" from index.config.js ====> Cleared
+2) Make the restaurant create route as Private as it is Public and other than admin will create new restaurant using that route
+3) Error: Get user data for Review System - User not found ====> Cleared
+4) Error : this.splitPath is not the function - GET MenuImage by _id --->Check it after the completion of API works
+5) 
