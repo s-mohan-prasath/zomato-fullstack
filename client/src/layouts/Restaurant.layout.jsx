@@ -8,6 +8,7 @@ import {BiBookmarkPlus} from 'react-icons/bi'
 import Navbar from '../components/Navbar'
 
 import InfoButton from '../components/Restaurant/InfoButton'
+import FoodTab from "../components/FoodTab";
 
 const RestaurantLayout =
   (Component) =>
