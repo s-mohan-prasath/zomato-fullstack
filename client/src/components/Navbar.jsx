@@ -6,7 +6,7 @@ import { RiSearch2Line } from "react-icons/ri";
 
 
 const Navbar = () => {
-  const [isOpenDrop, setIsOpenDrop] = useState(true);
+  const [isOpenDrop, setIsOpenDrop] = useState(false);
 
   const user = {
     fullName: "Mohan Prasath S",
@@ -15,7 +15,7 @@ const Navbar = () => {
   const DropSign = () => {
     return (
       <>
-        <div className="flex flex-col absolute top-20 right-5 z-20 justify-center items-center gap-3 border border-gray-500 p-2 rounded-md shadow-lg">
+        <div className="flex flex-col absolute top-20 right-5 justify-center items-center gap-3 border border-gray-500 p-2 rounded-md shadow-lg z-30 bg-white">
           <button className="text-gray-500 hover:text-gray-900  text-lg border-none outline-none">
             Login
           </button>
@@ -29,7 +29,7 @@ const Navbar = () => {
   const DropSignOut = () => {
     return (
       <>
-        <div className="flex flex-col absolute top-20 right-5 z-20 justify-center items-center gap-3 border border-gray-500 p-2 rounded-md shadow-lg">
+        <div className="flex flex-col absolute top-20 right-5 justify-center items-center gap-3 border border-gray-500 p-2 rounded-md shadow-lg z-30 bg-white">
           <button className="text-gray-500 hover:text-gray-900 text-lg border-none outline-none align-middle">
             Sign Out
           </button>
@@ -174,10 +174,10 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="block md:hidden">
+      <div className="block md:hidden z-50">
         <Navsm />
       </div>
-      <div className="hidden md:block">
+      <div className="hidden md:block z-50">
         <Navmd />
       </div>
     </>
