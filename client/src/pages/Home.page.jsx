@@ -6,8 +6,8 @@ import {useParams} from 'react-router-dom'
 
 import Delivery from '../components/Tabs/Delivery/Delivery'
 import DiningOut from '../components/Tabs/Dining/DiningOut'
-import NightLife from '../components/Tabs/NightLife'
-import Nutrition from '../components/Tabs/Nutrition'
+import NightLife from '../components/Tabs/NightLife/NightLife'
+import Nutrition from '../components/Tabs/Nutrition/Nutrition'
 
 
 const Home = () => {
